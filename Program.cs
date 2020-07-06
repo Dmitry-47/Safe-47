@@ -2,102 +2,187 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
-using System.Xml.Serialization;
 
-namespace Atribut1
+namespace quiz
 {
     class Program
     {
-        static public void GetFilePoint(string puth)
-        { 
-         WayValidationAttribute Test = new WayValidationAttribute("Test1.xml");
-            if (Test.testPuth(puth))
-            {
-                GetPoint(puth);
-            }
-            else
-                Console.WriteLine("Не верное имя файла");
-         }
-       static public Point GetPoint(string puth)
-        {           
-                Point new_point = new Point();
-                XmlSerializer xmlFormat = new XmlSerializer(typeof(Point));
-                using (Stream fStream = File.OpenRead(puth))
-                {
-                    new_point = (Point)xmlFormat.Deserialize(fStream);
-                }
-            Console.WriteLine(new_point);
-            return new_point;            
-            
-        }
-
-       static public void SetFilePoint(Point anyPoint, string puth)
-        {
-            XmlSerializer xmlFormat = new XmlSerializer(typeof(Point));
-            using (Stream fStream = File.Create(puth))
-            {
-                xmlFormat.Serialize(fStream, anyPoint);
-            }
-        }
 
         static void Main(string[] args)
         {
-            Point point1 = new Point(1, 4);
-            Console.WriteLine(point1);
-
-
-
-            var xmlDoc = new XDocument(new XDeclaration("1.0", "utf-8", "no"), new XElement("Paint"));
-            xmlDoc.Root.Add(new XElement("paint1"),
-                new XElement("_X", point1._X),
-                  new XElement("_Y", point1._Y));
-
-            xmlDoc.Save("xmlDoc.xml");
-            string nameFile = "xmlDoc.xml";
-
-            var paint = from Paint in XDocument.Load(Path.Combine(Environment.CurrentDirectory, nameFile)).Descendants("Paint")
-                        select new Point
-                        {
-                            _X = (int)Paint.Element("_X"),
-                            _Y = (int)Paint.Element("_Y"),
-                        };
-            foreach (var p in paint)
+            Admin admin = new Admin();
+            User user = new User();
+            string _Login = null;
+            string _Password = null;
+            int caseSwitch = 0;
+            while (caseSwitch != 5)
             {
-                Console.WriteLine(p);
+                Console.Clear();
+                Console.WriteLine();
+                Console.WriteLine($"введите: \n1 Администратор-регистрация  \n2 Администратор-войти \n3 Пользователь-регистрация \n4 Пользователь-войти \n5 Для продолжения ");
+                Console.WriteLine();
+                try
+                {
+                    caseSwitch = Convert.ToInt32(Console.ReadLine());
+                   
+                }
+                catch (Exception exp)
+                {
+                    Console.WriteLine($"{exp}\nДля взаимодействия с меню нажмите клавишу 1, 2, 3, 4 или 5 затем enter\nНажмите enter для продолжения");
+                    Console.ReadKey();
+                }
+
+                switch (caseSwitch)
+                {
+                    case 1:
+                        Console.WriteLine("Введите логин");
+                        _Login = Console.ReadLine();
+                        Console.WriteLine("Введите пароль");
+                        _Password = Console.ReadLine();
+                        admin.AdminStart(_Login, _Password);
+
+                        break;
+
+                    case 2:
+                        Console.WriteLine("Введите логин");
+                        _Login = Console.ReadLine();
+                        Console.WriteLine("Введите пароль");
+                        _Password = Console.ReadLine();
+                        admin.AdminLoad(_Login, _Password);
+                        Console.WriteLine("Нажмите enter");
+                        Console.ReadKey();
+                        break;
+
+                    case 3:
+                        Console.WriteLine("Введите логин");
+                        _Login = Console.ReadLine();
+                        Console.WriteLine("Введите пароль");
+                        _Password = Console.ReadLine();
+                        user.User_entry(_Login, _Password);
+                        Console.WriteLine("Нажмите enter");
+                        Console.ReadKey();
+                        break;
+
+                    case 4:
+                        Console.WriteLine("Введите логин");
+                        _Login = Console.ReadLine();
+                        Console.WriteLine("Введите пароль");
+                        _Password = Console.ReadLine();
+                        user.UserLoad(_Login, _Password);
+                        Console.WriteLine("Нажмите enter");
+                        Console.ReadKey();
+                        break;
+
+                    default:
+                        Console.WriteLine("Bye");
+                        break;
+
+                }
             }
 
-
-
-            XmlSerializer xmlFormat = new XmlSerializer(typeof(Point));
-            using (Stream fStream = File.Create("xmlDoc.xml"))
+            if (admin.Login != null)
             {
-                xmlFormat.Serialize(fStream, point1);
-            }
-            WayValidationAttribute ioio = new WayValidationAttribute("xmlDoc.xml");
-            Console.WriteLine(ioio.path);
+                int caseSwitchAdmin = 0;
+                while (caseSwitchAdmin != 4)
+                {
+                    Console.Clear();
+                    Console.WriteLine();
+                    Console.WriteLine($"введите: \n1 Добавить задание в каталог  \n2 Удалить задание из каталога \n3 Просмотреть каталог вопросов \n4 Выход");
+                    Console.WriteLine();
+                    try
+                    {
+                        caseSwitchAdmin = Convert.ToInt32(Console.ReadLine());
+                       
+                    }
+                    catch (Exception exp)
+                    {
+                        Console.WriteLine($"{exp}\nДля взаимодействия с меню нажмите клавишу 1, 2, 3, 4 затем enter\nНажмите enter для продолжения");
+                        Console.ReadKey();
+                    }
 
-            Point point2 = new Point();
-            using (Stream fStream = File.OpenRead(ioio.path))
+                    switch (caseSwitchAdmin)
+                    {
+                        case 1:
+                            Console.WriteLine("Введите Id нового задания");
+                            string _Id = Console.ReadLine();
+                            Console.WriteLine("Введите условие нового задания");
+                            string _Question = Console.ReadLine();
+                            Console.WriteLine("Введите ожидаемый ответ для нового задания");
+                            string _CorrectAnswer = Console.ReadLine();
+                            admin.AdminTaskEntry(_Id, _Question, _CorrectAnswer);
+                            Console.WriteLine("Нажмите enter");
+                            Console.ReadKey();
+                            break;
+
+                        case 2:
+                            admin.AdminShowTask();
+                            Console.WriteLine("Введите Id задания, которое хотите удалить");
+                            _Id = Console.ReadLine();
+                            admin.AdminDeleteTask(_Id);
+                            Console.WriteLine("Нажмите enter");
+                            Console.ReadKey();
+                            break;
+
+                        case 3:
+                            admin.AdminShowTask();
+                            Console.WriteLine("Нажмите enter");
+                            Console.ReadKey();
+                            break;
+
+                  
+
+                        default:
+                            Console.WriteLine("Bye");
+                            break;
+
+                    }
+                }
+            }
+            if (user.Login != null)
             {
-                point2 = (Point)xmlFormat.Deserialize(fStream);
+                int caseSwitchUser = 0;
+                while (caseSwitchUser != 3)
+                {
+                    Console.Clear();
+                    Console.WriteLine();
+                    Console.WriteLine($"введите: \n1 Для старта игры  \n2 Для просмотра истории побед \n3 Выход  ");
+                    Console.WriteLine();
+                    try
+                    {
+                        caseSwitchUser = Convert.ToInt32(Console.ReadLine());
+                        
+                    }
+                    catch (Exception exp)
+                    {
+                        Console.WriteLine($"{exp}\nДля взаимодействия с меню нажмите клавишу 1, 2, 3 затем enter\nНажмите enter для продолжения");
+                        Console.ReadKey();
+                    }
+
+                    switch (caseSwitchUser)
+                    {
+                        case 1:
+                            user.Game();
+                            Console.WriteLine("Нажмите enter");
+                            Console.ReadKey();
+                            break;
+
+                        case 2:
+                            user.HistoryWinShow();
+                            Console.WriteLine("Нажмите enter");
+                            Console.ReadKey();
+                            break;
+
+                        default:
+                            Console.WriteLine("Bye");
+                            break;
+
+                    }
+                }
             }
-            Console.WriteLine(point2);
-
-            foreach (var atr in typeof(Point).GetCustomAttributes())
-            {
-                Console.WriteLine(atr);
-
-            }
-
-            //Point point1 = new Point(3,5);
-            //SetFilePoint(point1, "xmlDoc.xml");
-
-            GetFilePoint("Test1.xml");
-
+          
         }
     }
 }
