@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<Task>
+  <Id>1</Id>
+  <Question> По одной из версий, название этой страны с одного из древних языков можно перевести как берег кроликов?</Question>
+  <CorrectAnswer>испания</CorrectAnswer>
+  <Task>
+    <Id>2</Id>
+    <Question>Какая трава была названа индейцами «следом белого человека»?</Question>
+    <CorrectAnswer>подорожник</CorrectAnswer>
+  </Task>
+  <Task>
+    <Id>3</Id>
+    <Question>Что проводит звук в десять раз быстрее воздуха?</Question>
+    <CorrectAnswer>гранит</CorrectAnswer>
+  </Task>
+  <Task>
+    <Id>4</Id>
+    <Question>Эту ягоду пытались культивировать начиная с 19 века, но полноценно это удалось лишь в 60-х годах 20 века</Question>
+    <CorrectAnswer>брусника</CorrectAnswer>
+  </Task>
+  <Task>
+    <Id>5</Id>
+    <Question>Этот термин произошел от латинского слова, переводимого на русский как «вздутие»</Question>
+    <CorrectAnswer>инфляция</CorrectAnswer>
+  </Task>
+  <Task>
+    <Id>6</Id>
+    <Question>Единственное ядовитое млекопитающее в мире</Question>
+    <CorrectAnswer>утконос</CorrectAnswer>
+  </Task>
+  <Task>
+    <Id>7</Id>
+    <Question>Этот материал был известен в Египте и Месопотамии, но в современном виде был получен только в 17 веке</Question>
+    <CorrectAnswer>хрусталь</CorrectAnswer>
+  </Task>
+</Task>
